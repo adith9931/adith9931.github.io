@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Adith P — Cybersecurity Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #f8f7f4;
+    --surface: #ffffff;
+    --text: #1a1a1a;
+    --muted: #6b6b6b;
+    --accent: #0a3d62;
+    --accent-light: #e8f0f7;
+    --border: rgba(0,0,0,0.1);
+    --mono: 'IBM Plex Mono', monospace;
+    --sans: 'DM Sans', sans-serif;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--sans);
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    font-size: 16px;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0;
+    background: rgba(248,247,244,0.92);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--border);
+    z-index: 100;
+    padding: 0 2rem;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 56px;
+  }
+  .nav-logo {
+    font-family: var(--mono);
+    font-size: 14px;
+    color: var(--accent);
+    letter-spacing: 0.02em;
+    text-decoration: none;
+  }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a {
+    font-size: 14px;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--text); }
+
+  /* SECTIONS */
+  section { padding: 5rem 2rem; max-width: 800px; margin: 0 auto; }
+
+  /* HERO */
+  #hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-top: 56px;
+  }
+  .hero-tag {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--accent);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .hero-tag::before {
+    content: '';
+    display: inline-block;
+    width: 24px; height: 1px;
+    background: var(--accent);
+  }
+  h1.hero-name {
+    font-size: clamp(2.5rem, 7vw, 4.5rem);
+    font-weight: 300;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+    color: var(--text);
+  }
+  h1.hero-name span { font-weight: 500; }
+  .hero-bio {
+    font-size: 1.1rem;
+    color: var(--muted);
+    max-width: 520px;
+    margin-bottom: 2.5rem;
+    font-weight: 300;
+  }
+  .hero-cta {
+    display: flex; gap: 1rem; flex-wrap: wrap;
+  }
+  .btn {
+    display: inline-block;
+    padding: 0.65rem 1.5rem;
+    border-radius: 4px;
+    font-size: 14px;
+    font-family: var(--sans);
+    font-weight: 500;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.2s;
+    border: 1px solid transparent;
+  }
+  .btn-primary {
+    background: var(--accent);
+    color: #fff;
+  }
+  .btn-primary:hover { background: #0d4f7c; }
+  .btn-outline {
+    background: transparent;
+    color: var(--accent);
+    border-color: var(--accent);
+  }
+  .btn-outline:hover { background: var(--accent-light); }
+
+  /* DIVIDER */
+  .section-label {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--accent);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 2.5rem;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+    max-width: 120px;
+  }
+
+  /* ABOUT */
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: start;
+  }
+  .about-text p { color: var(--muted); margin-bottom: 1rem; font-weight: 300; }
+  .about-text p:last-child { margin-bottom: 0; }
+  .about-info dt {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--accent);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-top: 1.25rem;
+    margin-bottom: 0.25rem;
+  }
+  .about-info dd { font-size: 15px; color: var(--text); }
+
+  /* SKILLS */
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+  }
+  .skill-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1.25rem;
+  }
+  .skill-card h3 {
+    font-size: 13px;
+    font-family: var(--mono);
+    color: var(--accent);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    margin-bottom: 0.75rem;
+    font-weight: 500;
+  }
+  .skill-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+  .skill-tag {
+    font-size: 12px;
+    background: var(--accent-light);
+    color: var(--accent);
+    padding: 3px 10px;
+    border-radius: 3px;
+    font-family: var(--mono);
+  }
+
+  /* PROJECTS */
+  .projects-list { display: flex; flex-direction: column; gap: 1rem; }
+  .project-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1rem;
+    transition: border-color 0.2s;
+  }
+  .project-card:hover { border-color: var(--accent); }
+  .project-card h3 {
+    font-size: 16px;
+    font-weight: 500;
+    margin-bottom: 0.4rem;
+  }
+  .project-card p { font-size: 14px; color: var(--muted); font-weight: 300; }
+  .project-badge {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--muted);
+    white-space: nowrap;
+    margin-top: 4px;
+    padding: 3px 8px;
+    border: 1px solid var(--border);
+    border-radius: 3px;
+  }
+
+  /* CONTACT */
+  .contact-wrapper {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 2rem;
+  }
+  .contact-wrapper p { color: var(--muted); margin-bottom: 1.5rem; font-weight: 300; }
+  .contact-links { display: flex; flex-direction: column; gap: 0.75rem; }
+  .contact-link {
+    display: flex; align-items: center; gap: 12px;
+    color: var(--text);
+    text-decoration: none;
+    font-size: 15px;
+    padding: 0.6rem 0;
+    border-bottom: 1px solid var(--border);
+    transition: color 0.2s;
+  }
+  .contact-link:last-child { border-bottom: none; }
+  .contact-link:hover { color: var(--accent); }
+  .contact-icon {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--accent);
+    width: 70px;
+    flex-shrink: 0;
+  }
+
+  /* FOOTER */
+  footer {
+    text-align: center;
+    padding: 2rem;
+    font-size: 13px;
+    color: var(--muted);
+    border-top: 1px solid var(--border);
+    font-family: var(--mono);
+  }
+
+  /* ANIMATIONS */
+  .fade-in {
+    opacity: 0;
+    transform: translateY(18px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+  @media (max-width: 600px) {
+    .about-grid { grid-template-columns: 1fr; gap: 2rem; }
+    .nav-links { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#hero" class="nav-logo"> Adith P</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-tag">Cybersecurity Engineering Student</div>
+  <h1 class="hero-name">Hi, I'm <span>Adith P</span></h1>
+  <p class="hero-bio">
+    First-year student passionate about digital security, ethical hacking, and building a safer internet — one project at a time.
+  </p>
+  <div class="hero-cta">
+    <a href="#projects" class="btn btn-primary">View Projects</a>
+    <a href="#contact" class="btn btn-outline">Get in Touch</a>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about" class="fade-in">
+  <div class="section-label">About me</div>
+  <div class="about-grid">
+    <div class="about-text">
+      <p>
+        I'm a first-year Cybersecurity Engineering student with a strong interest in network security, Linux systems, and the fundamentals of ethical hacking.
+      </p>
+      <p>
+        I enjoy learning how systems are built so I can understand how they can be broken — and protected. Outside of studying, I work on CTF (Capture The Flag) challenges to sharpen my skills.
+      </p>
+    </div>
+    <dl class="about-info">
+      <dt>Degree</dt>
+      <dd>B.Tech — Cybersecurity Engineering</dd>
+      <dt>Year</dt>
+      <dd>1st Year (2024–2025)</dd>
+      <dt>Location</dt>
+      <dd>Dharmashala, Kerala, India</dd>
+      <dt>Interests</dt>
+      <dd>Ethical Hacking, CTFs, Linux, Networks</dd>
+    </dl>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills" class="fade-in">
+  <div class="section-label">Skills</div>
+  <div class="skills-grid">
+    <div class="skill-card">
+      <h3>Languages</h3>
+      <div class="skill-tags">
+        <span class="skill-tag">Python</span>
+        <span class="skill-tag">Bash</span>
+        <span class="skill-tag">C</span>
+      </div>
+    </div>
+    <div class="skill-card">
+      <h3>Security</h3>
+      <div class="skill-tags">
+        <span class="skill-tag">Nmap</span>
+        <span class="skill-tag">Wireshark</span>
+        <span class="skill-tag">Metasploit</span>
+      </div>
+    </div>
+    <div class="skill-card">
+      <h3>Systems</h3>
+      <div class="skill-tags">
+        <span class="skill-tag">Linux</span>
+        <span class="skill-tag">Networking</span>
+        <span class="skill-tag">TCP/IP</span>
+      </div>
+    </div>
+    <div class="skill-card">
+      <h3>Tools</h3>
+      <div class="skill-tags">
+        <span class="skill-tag">Git</span>
+        <span class="skill-tag">VirtualBox</span>
+        <span class="skill-tag">Kali Linux</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects" class="fade-in">
+  <div class="section-label">Projects</div>
+  <div class="projects-list">
+    <div class="project-card">
+      <div>
+        <h3>Network Scanner Tool</h3>
+        <p>A Python-based tool to scan local networks, detect open ports, and identify active hosts using socket programming.</p>
+      </div>
+      <span class="project-badge">Python</span>
+    </div>
+    <div class="project-card">
+      <div>
+        <h3>CTF Write-ups</h3>
+        <p>Documented solutions to beginner and intermediate Capture The Flag challenges covering web security, cryptography, and forensics.</p>
+      </div>
+      <span class="project-badge">CTF</span>
+    </div>
+    <div class="project-card">
+      <div>
+        <h3>Linux Hardening Scripts</h3>
+        <p>Bash scripts to automate basic server hardening — disabling unused services, setting up firewalls, and configuring SSH securely.</p>
+      </div>
+      <span class="project-badge">Bash</span>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="fade-in">
+  <div class="section-label">Contact</div>
+  <div class="contact-wrapper">
+    <p>I'm open to internships, collaborations, and connecting with others in the security community. Feel free to reach out!</p>
+    <div class="contact-links">
+      <a href="mailto:your@email.com" class="contact-link">
+        <span class="contact-icon">email →</span>
+        adith9931@gmail.com
+      </a>
+      <a href="https://linkedin.com/in/yourhandle" class="contact-link" target="_blank">
+        <span class="contact-icon">linkedin →</span>
+        linkedin.com/in/yourhandle
+      </a>
+      <a href="https://github.com/yourhandle" class="contact-link" target="_blank">
+        <span class="contact-icon">github →</span>
+        github.com/yourhandle
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  built by Adith P &nbsp;·&nbsp; 2025
+</footer>
+
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
